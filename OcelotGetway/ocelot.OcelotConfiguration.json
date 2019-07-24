@@ -1,0 +1,49 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/{url}/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/OcelotChShiFirst/{url}/{id}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "Key": "Good",
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/OcelotChShiTwo/{url}/{id}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "Key": "Order",
+      "Priority": 2
+    }
+  ],
+  "Aggregates": [
+    {
+      "ReRouteKeys": [
+        "Good",
+        "Order"
+      ],
+      "UpstreamPathTemplate": "/GetOrderDetail/{id}"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5000",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 5000,
+      "ConfigurationKey": "OcelotKey"
+    }
+  }
+}
