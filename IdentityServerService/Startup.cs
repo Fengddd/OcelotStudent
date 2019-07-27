@@ -26,6 +26,12 @@ namespace IdentityServerService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // 使用内存存储，密钥，客户端和资源来配置身份服务器。
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
+                .AddInMemoryApiResources(IdentityConfig.GetApiResource())
+                .AddInMemoryClients(IdentityConfig.GetClients());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +48,7 @@ namespace IdentityServerService
             }
 
             app.UseHttpsRedirection();
+            app.UseIdentityServer();
             app.UseMvc();
         }
     }

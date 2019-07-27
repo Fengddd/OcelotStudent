@@ -15,11 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ocelot", "Ocelot", "{29354D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{E9D35A68-F302-4E3E-A60A-D5E1A419F32D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerApi", "IdentityServerApi\IdentityServerApi.csproj", "{F0805B44-D7E6-4D56-8BC4-7BAEAC057819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerApi", "IdentityServerApi\IdentityServerApi.csproj", "{F0805B44-D7E6-4D56-8BC4-7BAEAC057819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerClient", "IdentityServerClient\IdentityServerClient.csproj", "{7366A731-624D-4BDB-A2FA-BDAC21B91B17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerClient", "IdentityServerClient\IdentityServerClient.csproj", "{7366A731-624D-4BDB-A2FA-BDAC21B91B17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerService", "IdentityServerService\IdentityServerService.csproj", "{627C2A17-D0D9-488A-8DA2-52CDFD38AC9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerService", "IdentityServerService\IdentityServerService.csproj", "{627C2A17-D0D9-488A-8DA2-52CDFD38AC9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerWeb", "IdentityServerWeb\IdentityServerWeb.csproj", "{C5B5E956-7843-48D8-8401-B60DEB88163E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{627C2A17-D0D9-488A-8DA2-52CDFD38AC9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{627C2A17-D0D9-488A-8DA2-52CDFD38AC9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{627C2A17-D0D9-488A-8DA2-52CDFD38AC9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B5E956-7843-48D8-8401-B60DEB88163E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B5E956-7843-48D8-8401-B60DEB88163E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B5E956-7843-48D8-8401-B60DEB88163E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B5E956-7843-48D8-8401-B60DEB88163E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{F0805B44-D7E6-4D56-8BC4-7BAEAC057819} = {E9D35A68-F302-4E3E-A60A-D5E1A419F32D}
 		{7366A731-624D-4BDB-A2FA-BDAC21B91B17} = {E9D35A68-F302-4E3E-A60A-D5E1A419F32D}
 		{627C2A17-D0D9-488A-8DA2-52CDFD38AC9B} = {E9D35A68-F302-4E3E-A60A-D5E1A419F32D}
+		{C5B5E956-7843-48D8-8401-B60DEB88163E} = {E9D35A68-F302-4E3E-A60A-D5E1A419F32D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DB0ED9E-F730-4482-B577-34E05812B116}

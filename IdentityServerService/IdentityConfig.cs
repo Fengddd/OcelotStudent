@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using Secret = Microsoft.AspNetCore.DataProtection.Secret;
+
 
 namespace IdentityServerService
 {
@@ -27,7 +27,7 @@ namespace IdentityServerService
         {
             return new List<ApiResource>
             {
-                new ApiResource("identityServerApi", "My API")
+                new ApiResource("identityServerApi", "identityServerApi")
             };
         }
 
@@ -38,14 +38,40 @@ namespace IdentityServerService
         /// <returns></returns>
         public static IEnumerable<Client> GetClients()
         {
+          
             return new List<Client>
             {
                 new Client
                 {
-                    ClientId = "socialnetwork",
-                    //ClientSecrets = new [] { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "socialnetwork" }
+                    ClientId = "client",
+
+                    // 没有交互性用户，使用 clientid/secret 实现认证。
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    
+                    // 用于认证的密码
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+
+                    },
+                    // 客户端有权访问的范围（Scopes）
+                    AllowedScopes = { "identityServerApi" }
+                },
+                new Client
+                {
+                    ClientId = "client1",
+
+                    // 没有交互性用户，使用 clientid/secret 实现认证。
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    
+                    // 用于认证的密码
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+
+                    },
+                    // 客户端有权访问的范围（Scopes）
+                    AllowedScopes = { "identityServerApi" }
                 }
             };
         }
