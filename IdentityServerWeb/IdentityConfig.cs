@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
@@ -10,7 +12,8 @@ namespace IdentityServerWeb
         {
             return new IdentityResource[]
             {
-                new IdentityResources.OpenId()
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
             };
         }
 
@@ -34,7 +37,7 @@ namespace IdentityServerWeb
         /// <returns></returns>
         public static IEnumerable<Client> GetClients()
         {
-          
+
             return new List<Client>
             {
                 new Client
@@ -55,20 +58,27 @@ namespace IdentityServerWeb
                 },
                 new Client
                 {
-                    ClientId = "client1",
+                  ClientId = "mvc",
+                  ClientName = "MVC Client",
+                  AllowedGrantTypes = GrantTypes.Hybrid,
+                  ClientSecrets =
+                  {
+                      new Secret("secret".Sha256())
+                  },
+                  // 登录成功回调处理地址，处理回调返回的数据
+                  RedirectUris = { "http://localhost:60121/signin-oidc" },
 
-                    // 没有交互性用户，使用 clientid/secret 实现认证。
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    
-                    // 用于认证的密码
-                    ClientSecrets =
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "http://localhost:60121/signout-callback-oidc" },
+                    AllowedScopes =
                     {
-                        new Secret("secret".Sha256())
-
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "identityServerApi"
                     },
-                    // 客户端有权访问的范围（Scopes）
-                    AllowedScopes = { "identityServerApi" }
-                }
+                    AllowOfflineAccess = true
+                   
+                 }
             };
         }
 
@@ -84,8 +94,14 @@ namespace IdentityServerWeb
                 {
                     SubjectId = "1",
                     Username = "李锋",
-                    Password = "123456"
+                    Password = "123456",
+                    Claims = new []
+                    {
+                        new Claim("name", "Bob"),
+                        new Claim("website", "https://bob.com")
+                    }
                 }
+
             };
         }
     }
