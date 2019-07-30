@@ -36,7 +36,9 @@ namespace IdentityServerWeb
                 .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
                 .AddInMemoryApiResources(IdentityConfig.GetApiResource())
                 .AddInMemoryClients(IdentityConfig.GetClients())
-                .AddTestUsers(IdentityConfig.GetUsers().ToList());
+                .AddTestUsers(IdentityConfig.GetUsers().ToList())
+                .AddProfileService<IdentityProfileService>()
+                .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
          
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

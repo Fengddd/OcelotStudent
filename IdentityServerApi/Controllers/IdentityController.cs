@@ -16,6 +16,7 @@ namespace IdentityServerApi.Controllers
         [Authorize]
         public ActionResult IdentityApi()
         {
+            var claim = HttpContext.User.Claims;
             return new JsonResult("测试访问API");
         }
     }

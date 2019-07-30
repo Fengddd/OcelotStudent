@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using IdentityServer4;
 using IdentityServer4.Models;
@@ -13,7 +14,8 @@ namespace IdentityServerWeb
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
+                
             };
         }
 
@@ -26,7 +28,12 @@ namespace IdentityServerWeb
         {
             return new List<ApiResource>
             {
-                new ApiResource("identityServerApi", "identityServerApi")
+                //new Claim("userId", Guid.NewGuid().ToString()),
+                //new Claim("userPhone", "8888888888"),
+                //new Claim("userRole", "Admin")
+              
+                new ApiResource("identityServerApi", "identityServerApi",new List<string>(){ "userId", "userPhone", "userRole"})
+
             };
         }
 
@@ -77,7 +84,7 @@ namespace IdentityServerWeb
                         "identityServerApi"
                     },
                     AllowOfflineAccess = true
-                   
+
                  }
             };
         }
@@ -97,8 +104,9 @@ namespace IdentityServerWeb
                     Password = "123456",
                     Claims = new []
                     {
-                        new Claim("name", "Bob"),
-                        new Claim("website", "https://bob.com")
+                        new Claim("userId", Guid.NewGuid().ToString()),
+                        new Claim("userPhone", "8888888888"),
+                        new Claim("userRole", "Admin")
                     }
                 }
 
