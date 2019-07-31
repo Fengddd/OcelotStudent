@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -17,19 +18,14 @@ namespace IdentityServerWeb
         /// </summary>
         protected readonly ILogger Logger;
 
-        /// <summary>
-        /// The users
-        /// </summary>
-        protected readonly TestUserStore Users;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TestUserProfileService"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
         /// <param name="logger">The logger.</param>
-        public IdentityProfileService(TestUserStore users, ILogger<TestUserProfileService> logger)
+        public IdentityProfileService(ILogger<TestUserProfileService> logger)
         {
-            Users = users;
             Logger = logger;
         }
 
@@ -45,16 +41,29 @@ namespace IdentityServerWeb
             //判断是否有请求Claim信息
             if (context.RequestedClaimTypes.Any())
             {
+                var userClaims = new List<Claim>
+                {
+                    new Claim("测试1", "测试1"),
+                    new Claim("测试2", "测试2"),
+                    new Claim("测试3", "测试3"),
+                    new Claim("测试4", "测试4")
+                };
+                List<TestUser> userList = new List<TestUser>()
+                {
+                    new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="李锋",Claims = userClaims},
+                    new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="张三"},
+                };
+                TestUserStore userStore = new TestUserStore(userList);
                 //根据用户唯一标识查找用户信息
-                var user = Users.FindBySubjectId(context.Subject.GetSubjectId());
+                var user = userStore.FindBySubjectId(context.Subject.GetSubjectId());
                 if (user != null)
                 {
                     //调用此方法以后内部会进行过滤，只将用户请求的Claim加入到 context.IssuedClaims 集合中 这样我们的请求方便能正常获取到所需Claim
-
                     context.AddRequestedClaims(user.Claims);
-                }
-            }
 
+                }
+                //context.IssuedClaims=userClaims;
+            }
             context.LogIssuedClaims(Logger);
 
             return Task.CompletedTask;
@@ -68,8 +77,20 @@ namespace IdentityServerWeb
         public virtual Task IsActiveAsync(IsActiveContext context)
         {
             Logger.LogDebug("IsActive called from: {caller}", context.Caller);
-
-            var user = Users.FindBySubjectId(context.Subject.GetSubjectId());
+            var userClaims = new List<Claim>
+            {
+                new Claim("测试1", "测试1"),
+                new Claim("测试2", "测试2"),
+                new Claim("测试3", "测试3"),
+                new Claim("测试4", "测试4")
+            };
+            List<TestUser> userList = new List<TestUser>()
+            {
+                new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="李锋",Claims = userClaims},
+                new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="张三"},
+            };
+            TestUserStore userStore = new TestUserStore(userList);
+            var user = userStore.FindBySubjectId(context.Subject.GetSubjectId());
             context.IsActive = user?.IsActive == true;
 
             return Task.CompletedTask;

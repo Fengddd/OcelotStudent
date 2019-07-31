@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Test;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,10 +37,9 @@ namespace IdentityServerWeb
                 .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
                 .AddInMemoryApiResources(IdentityConfig.GetApiResource())
                 .AddInMemoryClients(IdentityConfig.GetClients())
-                .AddTestUsers(IdentityConfig.GetUsers().ToList())
-                .AddProfileService<IdentityProfileService>()
-                .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
-         
+                //.AddTestUsers(IdentityConfig.GetUsers().ToList())
+                .AddProfileService<IdentityProfileService>();
+                //.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

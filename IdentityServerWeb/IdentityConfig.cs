@@ -15,7 +15,7 @@ namespace IdentityServerWeb
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile()
-                
+
             };
         }
 
@@ -53,7 +53,7 @@ namespace IdentityServerWeb
 
                     // 没有交互性用户，使用 clientid/secret 实现认证。
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    
+                   
                     // 用于认证的密码
                     ClientSecrets =
                     {
@@ -73,8 +73,30 @@ namespace IdentityServerWeb
                       new Secret("secret".Sha256())
                   },
                   // 登录成功回调处理地址，处理回调返回的数据
-                  RedirectUris = { "http://localhost:60121/signin-oidc" },
-
+                  RedirectUris = { "http://localhost:12878/signin-oidc" },
+                  
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "http://localhost:12878/signout-callback-oidc" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "identityServerApi"
+                    },
+                    AllowOfflineAccess = true
+                 },
+                new Client
+                {
+                    ClientId = "mvcTwo",
+                    ClientName = "MVC Client",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    // 登录成功回调处理地址，处理回调返回的数据
+                    RedirectUris = { "http://localhost:60121/signin-oidc" },
+                  
                     // where to redirect to after logout
                     PostLogoutRedirectUris = { "http://localhost:60121/signout-callback-oidc" },
                     AllowedScopes =
@@ -84,8 +106,25 @@ namespace IdentityServerWeb
                         "identityServerApi"
                     },
                     AllowOfflineAccess = true
+                },
+                new Client
+                {
+                    ClientId = "ResourceOwnerPassword",
+                    ClientName = "ResourceOwnerPassword Client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "identityServerApi"
+                    },
+                    AllowOfflineAccess = true
 
-                 }
+                }
             };
         }
 

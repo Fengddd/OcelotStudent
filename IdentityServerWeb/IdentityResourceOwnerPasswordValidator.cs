@@ -37,10 +37,16 @@ namespace IdentityServerWeb
         /// <returns></returns>
         public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            //此处使用context.UserName, context.Password 用户名和密码来与数据库的数据做校验
-            if (_users.ValidateCredentials(context.UserName, context.Password))
+            List<TestUser> userList = new List<TestUser>()
             {
-                var user = _users.FindByUsername(context.UserName);
+                new TestUser(){SubjectId = "1",Password = "123456",Username="李锋"}
+            };
+            TestUserStore userStore = new TestUserStore(userList);
+          
+            //此处使用context.UserName, context.Password 用户名和密码来与数据库的数据做校验
+            if (userStore.ValidateCredentials(context.UserName, context.Password))
+            {
+                var user = userStore.FindByUsername(context.UserName);
                 var resultClaims = new List<Claim>
                 {
                     new Claim("测试1", "测试1"),

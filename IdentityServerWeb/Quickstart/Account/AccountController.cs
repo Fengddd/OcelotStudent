@@ -14,7 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.Quickstart.UI
@@ -41,8 +43,8 @@ namespace IdentityServer4.Quickstart.UI
             IEventService events,
             TestUserStore users = null)
         {
-            // if the TestUserStore is not in DI, then we'll just use the global users collection
-            // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
+
+
             _users = users ?? new TestUserStore(TestUsers.Users);
 
             _interaction = interaction;
@@ -108,10 +110,23 @@ namespace IdentityServer4.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-                // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                var resultClaims = new List<Claim>
                 {
-                    var user = _users.FindByUsername(model.Username);
+                    new Claim("≤‚ ‘1", "≤‚ ‘1"),
+                    new Claim("≤‚ ‘2", "≤‚ ‘2"),
+                    new Claim("≤‚ ‘3", "≤‚ ‘3"),
+                    new Claim("≤‚ ‘4", "≤‚ ‘4")
+                };
+                List<TestUser> userList = new List<TestUser>()
+                {
+                    new TestUser(){SubjectId =Guid.NewGuid().ToString(),Password = "123456",Username="¿Ó∑Ê",Claims = resultClaims}
+                };
+
+                TestUserStore userStore = new TestUserStore(userList);
+                // validate username/password against in-memory store
+                if (userStore.ValidateCredentials(model.Username, model.Password))
+                {
+                    var user = userStore.FindByUsername(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username, clientId: context?.ClientId));
 
                     // only set explicit expiration here if user chooses "remember me". 
@@ -158,7 +173,7 @@ namespace IdentityServer4.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -167,7 +182,7 @@ namespace IdentityServer4.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
