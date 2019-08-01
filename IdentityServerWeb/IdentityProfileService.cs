@@ -43,15 +43,13 @@ namespace IdentityServerWeb
             {
                 var userClaims = new List<Claim>
                 {
-                    new Claim("测试1", "测试1"),
-                    new Claim("测试2", "测试2"),
-                    new Claim("测试3", "测试3"),
-                    new Claim("测试4", "测试4")
+                    new Claim("demo1", "测试1"),
+                    new Claim("demo2", "测试2"),
                 };
                 List<TestUser> userList = new List<TestUser>()
                 {
-                    new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="李锋",Claims = userClaims},
-                    new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="张三"},
+                    new TestUser(){SubjectId = "cfac01a9-ba15-4678-bccb-cc22d7896362",Password = "123456",Username="李锋",Claims = userClaims},
+                    new TestUser(){SubjectId = "cfac01a9-ba15-4678-bccb-cc22d7855555",Password = "123456",Username="张三"},
                 };
                 TestUserStore userStore = new TestUserStore(userList);
                 //根据用户唯一标识查找用户信息
@@ -79,15 +77,13 @@ namespace IdentityServerWeb
             Logger.LogDebug("IsActive called from: {caller}", context.Caller);
             var userClaims = new List<Claim>
             {
-                new Claim("测试1", "测试1"),
-                new Claim("测试2", "测试2"),
-                new Claim("测试3", "测试3"),
-                new Claim("测试4", "测试4")
+                new Claim("demo1", "测试1"),
+                new Claim("demo2", "测试2"),
             };
             List<TestUser> userList = new List<TestUser>()
             {
-                new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="李锋",Claims = userClaims},
-                new TestUser(){SubjectId = Guid.NewGuid().ToString(),Password = "123456",Username="张三"},
+                new TestUser(){SubjectId = "cfac01a9-ba15-4678-bccb-cc22d7896362",Password = "123456",Username="李锋",Claims = userClaims},
+                new TestUser(){SubjectId = "cfac01a9-ba15-4678-bccb-cc22d7855555",Password = "123456",Username="张三"},
             };
             TestUserStore userStore = new TestUserStore(userList);
             var user = userStore.FindBySubjectId(context.Subject.GetSubjectId());

@@ -14,7 +14,9 @@ namespace IdentityServerWeb
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource("role","role",new List<string>(){ "demo1", "demo2"}), 
+
 
             };
         }
@@ -32,7 +34,7 @@ namespace IdentityServerWeb
                 //new Claim("userPhone", "8888888888"),
                 //new Claim("userRole", "Admin")
               
-                new ApiResource("identityServerApi", "identityServerApi",new List<string>(){ "userId", "userPhone", "userRole"})
+                new ApiResource("identityServerApi", "identityServerApi")
 
             };
         }
@@ -96,14 +98,15 @@ namespace IdentityServerWeb
                     },
                     // 登录成功回调处理地址，处理回调返回的数据
                     RedirectUris = { "http://localhost:60121/signin-oidc" },
-                  
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     // where to redirect to after logout
                     PostLogoutRedirectUris = { "http://localhost:60121/signout-callback-oidc" },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "identityServerApi"
+                        "identityServerApi",
+                        "role"
                     },
                     AllowOfflineAccess = true
                 },

@@ -112,14 +112,14 @@ namespace IdentityServer4.Quickstart.UI
             {
                 var resultClaims = new List<Claim>
                 {
-                    new Claim("≤‚ ‘1", "≤‚ ‘1"),
-                    new Claim("≤‚ ‘2", "≤‚ ‘2"),
-                    new Claim("≤‚ ‘3", "≤‚ ‘3"),
-                    new Claim("≤‚ ‘4", "≤‚ ‘4")
+                    new Claim("demo1", "≤‚ ‘1"),
+                    new Claim("demo2", "≤‚ ‘2"),
+
                 };
                 List<TestUser> userList = new List<TestUser>()
                 {
-                    new TestUser(){SubjectId =Guid.NewGuid().ToString(),Password = "123456",Username="¿Ó∑Ê",Claims = resultClaims}
+                    new TestUser(){SubjectId = "cfac01a9-ba15-4678-bccb-cc22d7896362",Password = "123456",Username="¿Ó∑Ê"},
+                    new TestUser(){SubjectId = "cfac01a9-ba15-4678-bccb-cc22d7855555",Password = "123456",Username="’≈»˝"},
                 };
 
                 TestUserStore userStore = new TestUserStore(userList);

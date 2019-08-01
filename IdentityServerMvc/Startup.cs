@@ -36,7 +36,7 @@ namespace IdentityServerMvc
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //OpenID Connect认证
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication(options =>
                 {
@@ -57,6 +57,9 @@ namespace IdentityServerMvc
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.Scope.Add("identityServerApi");
+
+                    options.Scope.Add("openid");
+                    options.Scope.Add("role");
                 });
         }
 
