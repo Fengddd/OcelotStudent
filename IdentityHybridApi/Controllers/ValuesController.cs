@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace IdentityHybridApi.Controllers
         // GET api/values
         [HttpGet]
         [Authorize]
+        [EnableCors("any")]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");

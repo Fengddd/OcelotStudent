@@ -56,10 +56,10 @@ namespace IdentityServerMvc
 
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
-                    options.Scope.Add("identityServerApi");
 
+                    options.Scope.Add("identityServerApi");
                     options.Scope.Add("openid");
-                    options.Scope.Add("role");
+                    options.Scope.Add("delimitClaim");
                 });
         }
 

@@ -28,8 +28,22 @@ namespace IdentityHybridApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //配置跨域处理
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.AllowAnyOrigin() //允许任何来源的主机访问
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();//指定处理cookie
+                });
+            });
+
+
             //OpenID Connect认证
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication(options =>
                 {
@@ -39,11 +53,11 @@ namespace IdentityHybridApi
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-
+                 
                     options.Authority = "http://localhost:17491";
                     options.RequireHttpsMetadata = false;
 
-                    options.ClientId = "mvc";
+                    options.ClientId = "js";
                     options.ClientSecret = "secret";
                     options.ResponseType = "code id_token";
 
@@ -52,7 +66,10 @@ namespace IdentityHybridApi
 
                     options.Scope.Add("identityServerApi");
                     options.Scope.Add("offline_access");
-                    options.ClaimActions.MapJsonKey("website", "website");
+                    options.Scope.Add("openid");
+                    options.Scope.Add("delimitClaim");
+                    options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
+                    options.TokenValidationParameters.RequireExpirationTime = true;
                 });
         }
 
@@ -70,6 +87,7 @@ namespace IdentityHybridApi
             }
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            //app.UseCors("AnyOrigin");
             app.UseMvc();
         }
     }

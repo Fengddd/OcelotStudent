@@ -36,11 +36,36 @@ namespace IdentityServerApi
                     options.RequireHttpsMetadata = false;
 
                     options.Audience = "identityServerApi";
+                    options.Audience = "delimitClaim";
+           
                     //设置token过期时间
                     options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
                     options.TokenValidationParameters.RequireExpirationTime = true;
-
                 });
+
+            //services.AddAuthentication(options =>
+            //    {
+            //        options.DefaultScheme = "Cookies";
+            //        options.DefaultChallengeScheme = "oidc";
+            //    })
+            //    .AddCookie("Cookies")
+            //    .AddOpenIdConnect("oidc", options =>
+            //    {
+
+            //        options.Authority = "http://localhost:17491";
+            //        options.RequireHttpsMetadata = false;
+
+            //        options.ClientId = "mvcTwo";
+            //        options.ClientSecret = "secret";
+            //        options.ResponseType = "code id_token";
+
+            //        options.SaveTokens = true;
+            //        options.GetClaimsFromUserInfoEndpoint = true;
+            //        options.Scope.Add("identityServerApi");
+
+            //        options.Scope.Add("openid");
+            //        options.Scope.Add("delimitClaim");
+            //    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

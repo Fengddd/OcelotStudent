@@ -15,9 +15,7 @@ namespace IdentityServerWeb
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource("role","role",new List<string>(){ "demo1", "demo2"}), 
-
-
+                new IdentityResource("delimitClaim","delimitClaim",new List<string>(){ "demo1", "demo2"}), 
             };
         }
 
@@ -29,12 +27,9 @@ namespace IdentityServerWeb
         public static IEnumerable<ApiResource> GetApiResource()
         {
             return new List<ApiResource>
-            {
-                //new Claim("userId", Guid.NewGuid().ToString()),
-                //new Claim("userPhone", "8888888888"),
-                //new Claim("userRole", "Admin")
-              
-                new ApiResource("identityServerApi", "identityServerApi")
+            {              
+                new ApiResource("identityServerApi", "identityServerApi"),
+                //new ApiResource("delimitClaim","delimitClaim",new List<string>(){ "demo1", "demo2"})
 
             };
         }
@@ -74,6 +69,7 @@ namespace IdentityServerWeb
                   {
                       new Secret("secret".Sha256())
                   },
+                  AlwaysIncludeUserClaimsInIdToken = true,
                   // 登录成功回调处理地址，处理回调返回的数据
                   RedirectUris = { "http://localhost:12878/signin-oidc" },
                   
@@ -83,7 +79,8 @@ namespace IdentityServerWeb
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "identityServerApi"
+                        "identityServerApi",
+                        "delimitClaim"
                     },
                     AllowOfflineAccess = true
                  },
@@ -106,7 +103,7 @@ namespace IdentityServerWeb
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "identityServerApi",
-                        "role"
+                        "delimitClaim"
                     },
                     AllowOfflineAccess = true
                 },
@@ -127,6 +124,28 @@ namespace IdentityServerWeb
                     },
                     AllowOfflineAccess = true
 
+                },
+                new Client
+                {
+                    ClientId = "js",
+                    ClientName = "JavaScript Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    RedirectUris = { "http://localhost:8080/CallBack" },
+                    PostLogoutRedirectUris = { "http://localhost:8080 " },
+                    AllowedCorsOrigins = { "http://localhost:8080" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "identityServerApi",
+                        "delimitClaim"
+                    },
+                    AllowOfflineAccess = true
                 }
             };
         }
