@@ -36,8 +36,7 @@ namespace IdentityServerApi
                     options.RequireHttpsMetadata = false;
 
                     options.Audience = "identityServerApi";
-                    options.Audience = "delimitClaim";
-           
+
                     //设置token过期时间
                     options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(1);
                     options.TokenValidationParameters.RequireExpirationTime = true;

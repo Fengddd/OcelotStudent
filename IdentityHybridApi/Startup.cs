@@ -87,7 +87,7 @@ namespace IdentityHybridApi
             }
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            //app.UseCors("AnyOrigin");
+            app.UseCors("default");
             app.UseMvc();
         }
     }

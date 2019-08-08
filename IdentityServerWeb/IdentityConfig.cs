@@ -15,7 +15,7 @@ namespace IdentityServerWeb
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource("delimitClaim","delimitClaim",new List<string>(){ "demo1", "demo2"}), 
+                //new IdentityResource("delimitClaim","delimitClaim",new List<string>(){ "demo1", "demo2"}), 
             };
         }
 
@@ -29,7 +29,7 @@ namespace IdentityServerWeb
             return new List<ApiResource>
             {              
                 new ApiResource("identityServerApi", "identityServerApi"),
-                //new ApiResource("delimitClaim","delimitClaim",new List<string>(){ "demo1", "demo2"})
+                new ApiResource("delimitClaim","delimitClaim",new List<string>(){ "demo1", "demo2"})
 
             };
         }
@@ -129,13 +129,13 @@ namespace IdentityServerWeb
                 {
                     ClientId = "js",
                     ClientName = "JavaScript Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
-                    RedirectUris = { "http://localhost:8080/CallBack" },
-                    PostLogoutRedirectUris = { "http://localhost:8080 " },
+                    RedirectUris = { "http://localhost:8080/#/CallBack" },
+                    PostLogoutRedirectUris = { "http://localhost:8080/#/Home" },
                     AllowedCorsOrigins = { "http://localhost:8080" },
 
                     AllowedScopes =
